@@ -1,4 +1,4 @@
-library(timevis)
+# .libPaths("/home/chackk02/R/R_libraries/")
 library(plotly)
 library(shiny)
 
@@ -8,9 +8,9 @@ shinyUI(
     
     title = "PSP Resistance Map",
 
-    # Trends Page
+    # Prevalence Page
     tabPanel(
-      "Trends",
+      "Prevalence",
       
       fluidPage(
         
@@ -19,6 +19,7 @@ shinyUI(
         
         column(4, uiOutput("choose_rates_pathogen")),
         column(4, uiOutput("choose_rates_procedure")),
+        column(4, uiOutput("choose_rates_type")),
         column(4, uiOutput("choose_rates_func")),
         column(4, uiOutput("choose_rates_agent")),
         column(4, uiOutput("choose_rates_year")),
@@ -57,11 +58,9 @@ shinyUI(
         
         br(),
         br(),
-        
-        h5("Table of isolates", style = "color:black"),
-        h6("Select: pathogen, procedure, year and agent", style = "color:gray"),
-        h6("Description: A table of all isolates matching your selection criteria", style = "color:gray"),
-        mainPanel(dataTableOutput("plot_rates_4"))
+        br(),
+        br(),
+        h6("Kieran I Chacko. Cite me! I need a green card.", style = "color:gray")
         
       )
     ),
@@ -89,25 +88,9 @@ shinyUI(
         h5("Persistence & Heteroresistance", style = "color:black"),
         h6("Select: pathogen and procedure", style = "color:gray"),
         h6("Proportion of cases that are single, persistent or heteroresistant cases", style = "color:gray"),
-        bootstrapPage(plotlyOutput("plot_persi_1")),
-        
-        br(),
-        br(),
-        
-        h5("Mean MIC", style = "color:black"),
-        h6("Select: pathogen and procedure", style = "color:gray"),
-        h6("Average MIC for persistent and single sample infections", style = "color:gray"),
-        bootstrapPage(plotlyOutput("plot_persi_2")),
-        
-        br(),
-        br(),
-        
-        h5("Heteroresistance", style = "color:black"),
-        h6("Select: pathogen and procedure", style = "color:gray"),
-        h6("Left: Number of cases with a change in susceptibility phenotype for a given agent. Right: Percent of heteroresistant cases with a given time between isolates", style = "color:gray"),
         
         fluidRow(
-          splitLayout(cellWidths = c("50%", "50%"), plotlyOutput("plot_persi_3"), plotlyOutput("plot_persi_4")
+          splitLayout(cellWidths = c("50%", "50%"), plotlyOutput("plot_persi_1"), plotlyOutput("plot_persi_2")
                       
           )
         ),
@@ -115,104 +98,24 @@ shinyUI(
         br(),
         br(),
         
+        h5("Heteroresistance", style = "color:black"),
+        h6("Select: pathogen and procedure", style = "color:gray"),
+        h6("Left: Number of cases with a change in susceptibility phenotype for a given agent. Right: Percent of heteroresistant cases with a given time between isolates", style = "color:gray"),
+        bootstrapPage(plotlyOutput("plot_persi_3")),
+        
+        br(),
+        br(),
+        
         h5("MIC Trends", style = "color:black"),
         h6("Select: pathogen, procedure, agent and patient", style = "color:gray"),
         h6("MIC for all isolates of a select patient and agent", style = "color:gray"),
-        bootstrapPage(plotlyOutput("plot_persi_5")),
-        
-        br(),
-        br()
-        
-      )
-    ),
-    
-    # Transmission Page
-    tabPanel(
-      "Transmissions",
-      
-      fluidPage(
-        
-        br(),
-        br(),
-        
-        column(3, uiOutput("choose_trans_pathogen")),
-        column(3, uiOutput("choose_trans_procedure")),
-        column(3, uiOutput("choose_trans_year")),
-        column(3, uiOutput("choose_trans_size")),
+        bootstrapPage(plotlyOutput("plot_persi_4")),
         
         br(),
         br(),
         br(),
         br(),
-        hr(),
-        
-        h5("Transmission", style = "color:black"),
-        h6("Select: pathogen, procedure, year and cluster size", style = "color:gray"),
-        h6("Clusters of shared MIC profiles and locations", style = "color:gray"),
-        bootstrapPage(plotlyOutput("plot_trans_1")),
-        
-        br(),
-        br(),
-        
-        column(3, uiOutput("choose_trans_isolate")),
-        
-        br(),
-        br(),
-        br(),
-        br(),
-        hr(),
-        
-        h5("Cluster by isolate", style = "color:black"),
-        h6("Select: Isolate ID. Pathogen, procedure, year and cluster size selections do not apply.", style = "color:gray"),
-        h6("All isolates of the same procedure that share the same MIC profile.", style = "color:gray"),
-        bootstrapPage(plotlyOutput("plot_trans_2")),
-        
-        br(),
-        br()
-        
-      )
-    ),
-    
-    # Timeline Page
-    tabPanel(
-      "Timelines",
-      
-      fluidPage(
-        
-        br(),
-        br(),
-        
-        column(3, uiOutput("choose_timel_patient")),
-        
-        br(),
-        br(),
-        br(),
-        br(),
-        hr(),
-        
-        h5("Patient Timeline", style = "color:black"),
-        h6("Select: patient", style = "color:gray"),
-        h6("Timeline of all samples collected from the selected patient", style = "color:gray"),
-        bootstrapPage(timevisOutput("plot_timel_1")),
-        
-        br(),
-        br(),
-        
-        column(3, uiOutput("choose_timel_isolate")),
-        
-        br(),
-        br(),
-        br(),
-        br(),
-        hr(),
-        
-        h5("Transmission Timeline", style = "color:black"),
-        h6("Select: isolate", style = "color:gray"),
-        h6("Timeline of all samples with matching susceptibility profile to selected isolate", style = "color:gray"),
-        bootstrapPage(timevisOutput("plot_timel_2")),
-        
-        br(),
-        br()
+        h6("Kieran I Chacko. Cite me! I need a green card.", style = "color:gray")
         
       )
     ),
@@ -253,10 +156,16 @@ shinyUI(
         br(),
         br(),
         
-        h5("By genome", style = "color:black"),
+        h5("Table", style = "color:black"),
         h6("Select: genome", style = "color:gray"),
         h6("Resistance determinents for selected genome(s)", style = "color:gray"),
-        dataTableOutput("plot_resis_3")
+        dataTableOutput("plot_resis_3"),
+        
+        br(),
+        br(),
+        br(),
+        br(),
+        h6("Kieran I Chacko. Cite me! I need a green card.", style = "color:gray")
         
       )
     ),
@@ -362,24 +271,3 @@ shinyUI(
     )
   )
 )
-          
-        # 
-        # br(),
-        # br(),
-        # 
-        # h5("MDR prevalence and severeity", style = "color:gray"),
-        # bootstrapPage(plotlyOutput("plot_summ_2")),
-        # 
-        # br(),
-        # br(),
-        # 
-        # h5("Antibiotic utility", style = "color:gray"),
-        # bootstrapPage(plotlyOutput("plot_summ_3")),
-        # 
-        # br(),
-        # br(),
-        # 
-        # h5("Location hotspots", style = "color:gray"),
-        # bootstrapPage(plotlyOutput("plot_summ_4")),
-        
-        
